@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="/css/footer.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/register.css" />
+</head>
+<body>
+    <div class="wrapper">
+        <div class="title"><span>Register Form</span></div>
+        <form action="/register/save" method="post">
+            <div class="row">
+                <i class="fas fa-user"></i>
+                <input type="text" name="firstName" placeholder="First Name" required />
+            </div>
+            <div class="row">
+                <i class="fas fa-user"></i>
+                <input type="text" name="lastName" placeholder="Last Name" required />
+            </div>
+            <div class="row">
+                <i class="fas fa-envelope"></i>
+                <input type="email" name="email" placeholder="Email" required />
+            </div>
+            <div class="row">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" placeholder="Password" required />
+            </div>
+            <div class="row button">
+                <input type="submit" value="Register" />
+            </div>
+            <div class="login-link">Already a member? <a href="/login">Login here</a></div>
+        </form>
+    </div>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>
