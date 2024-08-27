@@ -1,0 +1,43 @@
+/* Fichier: table-styles.css */
+
+/* Style pour la table */
+.table {
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Style pour les en-têtes de la table */
+.table thead {
+    background-color: #343a40; /* Couleur de fond sombre */
+    color: #ffffff; /* Couleur du texte en blanc */
+}
+
+/* Style pour les cellules de la table */
+.table tbody tr {
+    transition: background-color 0.3s;
+}
+
+.table tbody tr:hover {
+    background-color: #f1f1f1; /* Couleur de survol */
+}
+
+/* Style pour les cellules */
+.table td {
+    vertical-align: middle;
+}
+
+/* Style pour les bordures de la table */
+.table-bordered {
+    border: 1px solid #dee2e6;
+}
+
+.table-bordered th,
+.table-bordered td {
+    border: 1px solid #dee2e6;
+}
+
+/* Style pour la police */
+.table td, .table th {
+    font-family: 'Roboto', sans-serif;
+}

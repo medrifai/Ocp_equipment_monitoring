@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import net.enjoy.springboot.registrationlogin.dto.RoleDto;
 import net.enjoy.springboot.registrationlogin.dto.UserDto;
 import net.enjoy.springboot.registrationlogin.entity.Role;
 import net.enjoy.springboot.registrationlogin.entity.User;
@@ -28,19 +29,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public void saveUser(UserDto userDto) {
         User user = new User();
-        user.setUsername(userDto.getFirstName() + " " + userDto.getLastName());
+        user.setName(userDto.getFirstName() + " " + userDto.getLastName());
         user.setEmail(userDto.getEmail());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
-        // Utilisation de RoleRepository pour trouver le rôle "ROLE_ADMIN"
-        Role adminRole = roleRepository.findByName("ROLE_ADMIN");
-        if (adminRole == null) {
-            adminRole = new Role();
-            adminRole.setName("ROLE_ADMIN");
-            roleRepository.save(adminRole); // Sauvegarde du rôle s'il n'existe pas encore
-        }
-
-        user.setRoles(Set.of(adminRole));
+        // Trouver ou créer les rôles
+        Set<Role> roles = userDto.getRoles().stream()
+                .map(roleDto -> roleRepository.findByName(roleDto.getName()))
+                .collect(Collectors.toSet());
+        
+        user.setRoles(roles);
         userRepository.save(user);
     }
 
@@ -59,16 +57,23 @@ public class UserServiceImpl implements UserService {
 
     private UserDto convertEntityToDto(User user) {
         UserDto userDto = new UserDto();
-        String[] name = user.getUsername().split(" ", 2);
-        userDto.setFirstName(name[0]);
-        userDto.setLastName(name.length > 1 ? name[1] : "");
+        if (user.getName() != null && !user.getName().isEmpty()) {
+            String[] nameParts = user.getName().split(" ", 2);
+            userDto.setFirstName(nameParts[0]);
+            userDto.setLastName(nameParts.length > 1 ? nameParts[1] : "");
+        } else {
+            userDto.setFirstName("");
+            userDto.setLastName("");
+        }
         userDto.setEmail(user.getEmail());
+        userDto.setRoles(user.getRoles().stream()
+                .map(role -> new RoleDto(role.getId(), role.getName()))
+                .collect(Collectors.toSet()));
         return userDto;
     }
 
     @Override
     public List<String> getAdminEmails() {
-        // Utilisation de RoleRepository pour trouver le rôle "ROLE_ADMIN"
         Role adminRole = roleRepository.findByName("ROLE_ADMIN");
         if (adminRole == null) {
             throw new IllegalStateException("Le rôle ROLE_ADMIN n'existe pas.");
@@ -78,5 +83,11 @@ public class UserServiceImpl implements UserService {
         return admins.stream()
                     .map(User::getEmail)
                     .collect(Collectors.toList());
+    }
+
+    @Override
+    public UserDto findUserById(Long id) {
+        User user = userRepository.findById(id).orElse(null);
+        return convertEntityToDto(user);
     }
 }

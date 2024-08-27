@@ -1,44 +1,57 @@
+/* Navbar container */
 .navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
     background: linear-gradient(90deg, rgba(28, 40, 51, 1) 0%, rgba(76, 175, 80, 1) 100%);
     padding: 1rem 2rem;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     transition: background 0.3s ease-in-out;
 }
 
+/* Custom navbar styles */
 .navbar-custom {
     font-size: 16px !important;
     font-weight: bold !important;
-    color: #343a40 !important;
+    color: #fff !important;
 }
+
+/* Logo image */
 .navbar-brand img {
     height: 50px;
     width: auto;
 }
 
+/* Navbar links */
 .navbar-nav .nav-link {
-    color: #fff;
+    color: #fff; /* Ensuring text is visible */
     font-weight: 500;
     padding: 0.75rem 1.25rem;
     border-radius: 0.375rem;
     transition: color 0.3s, background-color 0.3s;
-    display: flex;
-    align-items: center;
+    display: flex; /* Ensures links are displayed */
+    align-items: center; /* Aligns icon and text */
 }
 
+/* Hover effect for links */
 .navbar-nav .nav-link:hover {
     color: #ffd700;
     background-color: rgba(255, 255, 255, 0.1);
 }
 
+/* Icon margin within links */
 .navbar-nav .nav-link i {
     margin-right: 8px;
 }
 
+/* Toggler button for mobile view */
 .navbar-toggler {
     border: none;
     background-color: #fff;
 }
 
+/* Custom style for logout button */
 .nav-link-logout {
     display: flex;
     align-items: center;
@@ -51,11 +64,23 @@
     font-weight: 500;
 }
 
+/* Icon margin within logout button */
 .nav-link-logout i {
     margin-right: 8px;
 }
 
+/* Hover effect for logout button */
 .nav-link-logout:hover {
     background-color: #c82333;
     color: #fff;
+}
+
+/* Mobile view adjustments */
+@media (max-width: 991px) {
+    .navbar-nav {
+        text-align: center;
+    }
+    .navbar-nav .nav-link {
+        padding: 0.5rem 1rem;
+    }
 }

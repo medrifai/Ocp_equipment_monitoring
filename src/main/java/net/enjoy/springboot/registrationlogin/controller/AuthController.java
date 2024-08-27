@@ -75,19 +75,17 @@ public class AuthController {
 
     @GetMapping({"/", "/index"})
     public String index(Model model) {
-        // Récupérer l'authentification de l'utilisateur
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    // Récupérer l'authentification de l'utilisateur
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        // Vérifier si l'utilisateur est authentifié
-        boolean isAuthenticated = authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken);
+    // Déterminer si l'utilisateur est authentifié
+    boolean isAuthenticated = authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken);
 
-        // Si l'utilisateur est authentifié, charger les informations de l'utilisateur (si nécessaire)
-        // if (isAuthenticated) {
-        //     model.addAttribute("username", authentication.getName()); // Par exemple, passer le nom d'utilisateur au modèle
-        // }
+    // Ajouter la variable isAuthenticated au modèle
+    model.addAttribute("isAuthenticated", isAuthenticated);
 
-        // Retourner la vue index.html sans redirection
-        return "index";
-    }
+    // Retourner la vue index.html sans redirection
+    return "index";
+}
 
 }

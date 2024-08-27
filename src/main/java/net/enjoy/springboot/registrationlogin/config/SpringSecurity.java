@@ -33,7 +33,7 @@ public class SpringSecurity {
             .authorizeHttpRequests(authz -> authz
                 .requestMatchers("/", "/index", "/register/**", "/login", "/images/**", "/css/**", "/js/**").permitAll() // Permet l'accès public aux routes et ressources statiques
                 .requestMatchers("/equipments/**").authenticated()
-                .requestMatchers("/alerts/**", "/maintenance_logs/**").hasAnyRole("ADMIN", "TECHNICIAN") // Accès pour les rôles spécifiques
+                .requestMatchers("/alerts/**", "/maintenance_logs/**").hasAnyRole("ADMIN", "TECHNICIEN") // Accès pour les rôles spécifiques
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form

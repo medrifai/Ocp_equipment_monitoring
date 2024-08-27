@@ -1,5 +1,6 @@
 package net.enjoy.springboot.registrationlogin.entity;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
@@ -37,7 +38,7 @@ public class Equipment {
     private String photoUrl;
 
     @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Alert> alerts;
+    private Set<Alert> alerts = new HashSet<>();
 
     // Getters and Setters
     public Long getId() {
@@ -78,5 +79,16 @@ public class Equipment {
 
     public void setAlerts(Set<Alert> alerts) {
         this.alerts = alerts;
+    }
+
+    // Methods to manage bidirectional relationship
+    public void addAlert(Alert alert) {
+        alerts.add(alert);
+        alert.setEquipment(this);
+    }
+
+    public void removeAlert(Alert alert) {
+        alerts.remove(alert);
+        alert.setEquipment(null);
     }
 }

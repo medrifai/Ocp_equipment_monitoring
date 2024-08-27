@@ -1,19 +1,135 @@
-p {
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-.btn-create {
+/* Style général pour les cartes */
+.card-primary {
+    background-color: #004d00; /* Couleur verte roi */
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
     margin-bottom: 20px;
-    display: block;
-    text-align: center;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-h1 {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    color: #343a40;
-    text-align: center;
+.card-primary:hover {
+    background-color: #003300; /* Vert roi plus foncé au survol */
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
-table th {
-    color: #343a40;
+
+.card-primary .card-title {
+    color: #ffffff; /* Couleur du texte dans les cartes */
+}
+
+.card-primary .btn {
+    margin-top: 10px;
+    width: 100%;
+    color: #004d00;
+    background-color: #ffffff; /* Couleur de fond des boutons */
+    border-color: #ffffff; /* Couleur de bordure des boutons */
+    border-radius: 20px; /* Bordures arrondies des boutons */
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.card-primary .btn:hover {
+    background-color: #004d00;
+    color: #ffffff;
+}
+
+/* Style pour les cartes d'alerte dynamiques */
+.card-secondary {
+    background: linear-gradient(135deg, #000000, #434343); /* Dégradé linéaire noir */
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    color: #ffffff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-secondary:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-secondary .alert-icon-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.alert-icon {
+    font-size: 3rem;
+    color: #ffc107; /* Couleur jaune pour l'icône d'alerte */
+    border-radius: 50%;
+    background-color: #333333; /* Fond sombre pour l'icône */
+    padding: 15px;
+}
+
+.card-secondary .card-title {
+    font-size: 1.25rem;
+    color: #ffffff;
+}
+
+.card-secondary .card-text {
+    margin: 10px 0;
+}
+
+.card-secondary .card-date {
+    font-size: 0.875rem;
+    color: #bbbbbb;
+}
+
+.card-secondary .card-status {
+    margin-bottom: 10px;
+}
+
+.card-secondary .card-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Style des boutons */
+.card-actions .btn {
+    flex: 1;
+    border-radius: 20px; /* Bordures arrondies des boutons */
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-actions .btn i {
+    margin-right: 5px;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border: 2px solid #1c7430;
+    color: #ffffff;
+}
+
+.btn-success:hover {
+    background-color: #1c7430;
+    border-color: #155724;
+    transform: scale(1.05);
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border: 2px solid #c82333;
+    color: #ffffff;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+    transform: scale(1.05);
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    border: 2px solid #e0a800;
+    color: #212529;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+    border-color: #d39e00;
+    transform: scale(1.05);
 }

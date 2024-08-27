@@ -11,10 +11,12 @@ import net.enjoy.springboot.registrationlogin.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    User findByEmail(String email);
-
     @Query("SELECT u FROM User u JOIN FETCH u.roles WHERE u.email = :email")
     User findByEmailWithRoles(String email);
 
+    @Query("SELECT u FROM User u JOIN FETCH u.roles")
+    List<User> findAllWithRoles();
+    
+    User findByEmail(String email);
     List<User> findByRoles(Role role);
 }

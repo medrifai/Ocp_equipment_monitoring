@@ -3,6 +3,8 @@ package net.enjoy.springboot.registrationlogin.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,22 +32,35 @@ public class MaintenanceLogController {
 
     @GetMapping
     public String listMaintenanceLogs(Model model) {
+        addRoleAttributes(model); // Ajout des attributs d'authentification et de rôle au modèle
         model.addAttribute("maintenanceLogs", maintenanceLogService.getAllMaintenanceLogs());
         return "maintenance_log_list";
     }
 
     @GetMapping("/{id}")
     public String viewMaintenanceLog(@PathVariable Long id, Model model) {
+        addRoleAttributes(model); // Ajout des attributs d'authentification et de rôle au modèle
         MaintenanceLogDto maintenanceLog = maintenanceLogService.getMaintenanceLogById(id);
         if (maintenanceLog == null) {
             return "error/404";
         }
+
+        // Obtenez les détails de l'équipement à partir de l'ID de l'équipement
+        EquipmentDto equipment = equipmentService.getEquipmentById(maintenanceLog.getEquipmentId());
+        if (equipment == null) {
+            return "error/404";
+        }
+
+        // Ajoutez les détails de l'équipement au DTO de maintenance
         model.addAttribute("maintenanceLog", maintenanceLog);
+        model.addAttribute("equipment", equipment);
+
         return "maintenance_log_view";
     }
 
     @GetMapping("/create")
     public String createMaintenanceLogForm(Model model) {
+        addRoleAttributes(model); // Ajout des attributs d'authentification et de rôle au modèle
         MaintenanceLogDto maintenanceLogDto = new MaintenanceLogDto();
         List<EquipmentDto> equipmentList = equipmentService.getAllEquipments();
 
@@ -56,6 +71,7 @@ public class MaintenanceLogController {
 
     @PostMapping("/create")
     public String saveMaintenanceLog(@ModelAttribute @Valid MaintenanceLogDto maintenanceLogDto, BindingResult result, Model model) {
+        addRoleAttributes(model); // Ajout des attributs d'authentification et de rôle au modèle
         if (result.hasErrors()) {
             List<EquipmentDto> equipmentList = equipmentService.getAllEquipments();
             model.addAttribute("equipmentList", equipmentList); // Réajouter la liste des équipements en cas d'erreur
@@ -66,12 +82,32 @@ public class MaintenanceLogController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteMaintenanceLog(@PathVariable Long id) {
+    public String deleteMaintenanceLog(@PathVariable Long id, Model model) {
+        addRoleAttributes(model); // Ajout des attributs d'authentification et de rôle au modèle
         MaintenanceLogDto maintenanceLog = maintenanceLogService.getMaintenanceLogById(id);
         if (maintenanceLog == null) {
             return "error/404";
         }
         maintenanceLogService.deleteMaintenanceLog(id);
         return "redirect:/maintenance_logs";
+    }
+
+    // Méthode privée pour ajouter l'état d'authentification et de rôle au modèle
+    @SuppressWarnings("null")
+    private void addRoleAttributes(Model model) {
+        org.springframework.security.core.Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAuthenticated = authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken);
+
+        model.addAttribute("isAuthenticated", isAuthenticated);
+
+        if (isAuthenticated) {
+            model.addAttribute("isAdmin", authentication.getAuthorities().stream()
+                    .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN")));
+            model.addAttribute("isTechnicien", authentication.getAuthorities().stream()
+                    .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_TECHNICIEN")));
+        } else {
+            model.addAttribute("isAdmin", false);
+            model.addAttribute("isTechnicien", false);
+        }
     }
 }

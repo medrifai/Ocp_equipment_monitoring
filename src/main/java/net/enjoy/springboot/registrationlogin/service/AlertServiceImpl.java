@@ -61,6 +61,14 @@ public class AlertServiceImpl implements AlertService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void resolveAlert(Long id) {
+        Alert alert = alertRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Alert not found"));
+        alert.setResolved(true);
+        alertRepository.save(alert);
+    }
+
     private AlertDto convertToDto(Alert alert) {
         if (alert == null) {
             return null;
@@ -95,4 +103,3 @@ public class AlertServiceImpl implements AlertService {
         return alert;
     }
 }
-

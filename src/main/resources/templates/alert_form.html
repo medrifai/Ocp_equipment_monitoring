@@ -2,49 +2,71 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Create Alert</title>
+    <title>Create/Update Alert</title>
+    <link rel="icon" href="/images/logo.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="/css/navbar.css" rel="stylesheet">
-
     <link href="/css/alert_form.css" rel="stylesheet">
     <link href="/css/global.css" rel="stylesheet">
-    <link href="/css/footer.css" rel="stylesheet">
 </head>
 <body>
-    <!-- Inclure le fragment Navbar -->
     <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-    <div class="container">
-        <h1>Create Alert</h1>
-        <form th:action="@{/alerts/create}" th:object="${alert}" method="post">
-            <div class="form-group">
-                <label for="timestamp">Date:</label>
-                <input type="datetime-local" class="form-control" th:field="*{timestamp}" required="required"/>
-            </div>
-            <div class="form-group">
-                <label for="description">Description:</label>
-                <textarea class="form-control" th:field="*{description}" required="required"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="equipmentId">Equipment:</label>
-                <select class="form-select" th:field="*{equipmentId}" required="required">
-                    <option th:each="equip : ${equipmentList}" th:value="${equip.id}" th:text="${equip.name}"></option>
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Save</button>
-        </form>
+    <!-- Background Image -->
+    <div class="background-image"></div>
 
-        <div class="btn-group">
-            <a class="btn btn-secondary" href="/alerts">Back to List</a>
+    <!-- Page Content -->
+    <div class="container">
+        <h1>
+            <i class="fas fa-exclamation-triangle"></i> <!-- Icône appropriée -->
+            <span>Create Alert</span>
+        </h1>
+        <div class="form-container">
+            <form th:action="@{/alerts/create}" th:object="${alert}" method="post">
+                <div class="form-group">
+                    <label for="timestamp">
+                        <i class="fas fa-calendar-alt"></i> Date:
+                    </label>
+                    <input type="datetime-local" class="form-control" id="timestamp" name="timestamp" th:field="*{timestamp}" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">
+                        <i class="fas fa-info-circle"></i> Description:
+                    </label>
+                    <textarea class="form-control" id="description" name="description" th:field="*{description}" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="equipmentId">
+                        <i class="fas fa-cogs"></i> Equipment:
+                    </label>
+                    <select class="form-select" id="equipmentId" name="equipmentId" th:field="*{equipmentId}" required>
+                        <option th:each="equip : ${equipmentList}" th:value="${equip.id}" th:text="${equip.name}"></option>
+                    </select>
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save
+                    </button>
+                    <a class="btn btn-secondary" href="/alerts">
+                        <i class="fas fa-arrow-left"></i> Back to List
+                    </a>
+                </div>
+            </form>
         </div>
     </div>
 
-    <div th:replace="~{fragments/footer :: footer}"></div>
-    
+    <footer class="footer">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6">
+                <p>&copy; 2024 OCP Equipment Monitoring. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
     <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

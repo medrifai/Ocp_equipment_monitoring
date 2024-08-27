@@ -1,24 +1,212 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@700&display=swap");
 
-.container {
-    max-width: 600px;
-    margin: 0 auto;
-    background-color: #ffffff;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+:root {
+  /* Colors */
+  --brand-color: hsl(46, 100%, 50%);
+  --brand-color-hover: hsl(46, 100%, 60%);
+  --black: hsl(0, 0%, 0%);
+  --white: hsl(0, 0%, 100%);
+  /* Fonts */
+  --font-title: "Montserrat", sans-serif;
+  --font-text: "Lato", sans-serif;
 }
-.container h1 {
-    margin-bottom: 20px;
-    color: #343a40;
-    text-align: center;
+
+/* RESET */
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
-.container p {
-    font-size: 16px;
-    color: #495057;
-    margin-bottom: 10px;
+
+/* Remove default margin */
+body,
+h2,
+p {
+  margin: 0;
 }
-.btn-back {
-    margin-top: 20px;
-    display: block;
-    text-align: center;
+
+/* GLOBAL STYLES */
+body {
+  height: 100vh;
+  display: flex;
+}
+
+h2 {
+  font-size: 2.25rem;
+  font-family: var(--font-title);
+  color: var(--white);
+  line-height: 1.1;
+}
+
+p {
+  font-family: var(--font-text);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--white);
+}
+
+.flow > * + * {
+  margin-top: var(--flow-space, 1em);
+}
+
+/* CARD COMPONENT */
+
+.card {
+  width: 80vw;
+  max-width: 45rem;
+  height: 28.125rem;
+  overflow: hidden;
+  border-radius: 0.625rem;
+  box-shadow: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.25);
+  position: relative; /* Needed for absolute positioning of child elements */
+  cursor: pointer;
+  margin: 2rem 12rem; /* Margin top and bottom */
+  transition: transform 500ms ease-in-out;
+}
+
+.card__background {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  transition: transform 500ms ease-in-out;
+}
+
+.card__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 50%;
+  padding: 1.25rem;
+  background: linear-gradient(
+    180deg,
+    hsla(0, 0%, 0%, 0) 0%,
+    hsla(0, 0%, 0%, 0.3) 10%,
+    hsl(0, 0%, 0%) 100%
+  );
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  color: var(--white);
+  opacity: 1; /* Ensure it's always visible */
+  transition: opacity 500ms ease-in-out, transform 500ms ease-in-out;
+}
+
+.card__title {
+  position: absolute;
+  bottom: 2rem; /* Adjust to place it 1rem from the bottom */
+  left: 1rem; /* Optional: Add some space from the left */
+  font-family: var(--font-title);
+  font-size: 1.25rem;
+  color: var(--white);
+  background: rgba(0, 0, 0, 0.5); /* Optional: Add a background for better readability */
+  padding: 0.25rem; /* Optional: Add some padding for better spacing */
+  border-radius: 0.25rem; /* Optional: Add some border-radius for a rounded look */
+}
+
+.card__title::after {
+  content: "";
+  position: absolute;
+  height: 0.125rem;
+  width: 40%;
+  bottom: -0.3125rem;
+  left: 0;
+  background-color: var(--brand-color);
+  transition: width 500ms ease-in-out, opacity 500ms ease-in-out;
+}
+
+.card__description,
+.card__date {
+  font-family: var(--font-text);
+  color: var(--white);
+  transition: opacity 500ms ease-in-out;
+}
+
+.card__description {
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+  opacity: 0; /* Hide by default */
+}
+
+.card__date {
+  font-size: 1rem;
+  margin-top: 0.25rem;
+  opacity: 0; /* Hide by default */
+}
+
+.card__button {
+  padding: 0.5em 1em; /* Réduit la taille du bouton */
+  border-radius: 0.45em;
+  border: none;
+  background-color: var(--brand-color);
+  font-family: var(--font-title);
+  font-size: 0.875rem; /* Réduit la taille de la police */
+  color: var(--black); /* Couleur du texte du bouton */
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: background-color 500ms ease-in-out, color 500ms ease-in-out, opacity 500ms ease-in-out, transform 500ms ease-in-out;
+  opacity: 0;
+  width: 40%;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.card__button:focus {
+  outline: 2px solid black;
+  outline-offset: -5px;
+}
+
+/* Hover effects */
+@media (any-hover: hover) and (any-pointer: fine) {
+  .card:hover .card__background {
+    transform: scale(1.3);
+  }
+
+  .card:hover .card__title {
+    transform: translateY(-7.5rem);
+  }
+
+  .card:hover .card__title::after {
+    width: 100%;
+  }
+
+  .card:hover .card__content {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .card:hover .card__description,
+  .card:hover .card__date,
+  .card:hover .card__button {
+    opacity: 1;
+  }
+
+  .card:hover .card__button {
+    background-color: var(--brand-color-hover); /* Couleur de fond au survol */
+    color: var(--black); /* Couleur du texte reste noire */
+    transform: scale(1.05);
+  }
+}
+
+/* Animation après le hover */
+@keyframes buttonHover {
+  0% {
+    transform: scale(1.05);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Footer */
+.footer {
+  margin-top: auto; /* Pousse le footer vers le bas */
+  text-align: center;
+  color: #ffffff;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.7); /* Arrière-plan opaque pour la lisibilité */
 }

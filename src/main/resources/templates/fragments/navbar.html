@@ -1,4 +1,3 @@
-<!-- templates/fragments/navbar.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -19,22 +18,34 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
+                    <!-- Visible à tous les utilisateurs authentifiés -->
+                    <li class="nav-item" th:if="${isAdmin} == true">
+                        <a class="nav-link" th:href="@{/users}">
+                            <i class="bi bi-person"></i> Users
+                        </a>
+                    </li>
+
+                    <li class="nav-item" th:if="${isAuthenticated}">
                         <a class="nav-link" th:href="@{/equipments}">
                             <i class="bi bi-box"></i> Equipments
                         </a>
                     </li>
-                    <li class="nav-item">
+
+                    <!-- Visible uniquement aux utilisateurs avec les rôles ADMIN ou TECHNICIEN -->
+                    <li class="nav-item" th:if="${isAdmin} == true or ${isTechnicien} == true">
                         <a class="nav-link" th:href="@{/maintenance_logs}">
                             <i class="bi bi-wrench"></i> Maintenances
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" th:if="${isAdmin} == true or ${isTechnicien} == true">
                         <a class="nav-link" th:href="@{/alerts}">
                             <i class="bi bi-bell"></i> Alerts
                         </a>
                     </li>
-                    <li class="nav-item">
+                    
+
+                    <!-- Visible à tous les utilisateurs authentifiés -->
+                    <li class="nav-item" th:if="${isAuthenticated}">
                         <a class="nav-link" th:href="@{/contact}">
                             <i class="fas fa-envelope"></i> Contact
                         </a>
@@ -42,16 +53,17 @@
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <!-- Boutons pour les utilisateurs non authentifiés -->
-                    <li class="nav-item" th:if="${not isAuthenticated}">
+                    <li class="nav-item" th:if="${!isAuthenticated}">
                         <a class="nav-link" th:href="@{/login}">
                             <i class="fas fa-sign-in-alt"></i> Login
                         </a>
                     </li>
-                    <li class="nav-item" th:if="${not isAuthenticated}">
+                    <li class="nav-item" th:if="${!isAuthenticated}">
                         <a class="nav-link" th:href="@{/register}">
                             <i class="fas fa-user-plus"></i> Register
                         </a>
                     </li>
+
                     <!-- Bouton pour les utilisateurs authentifiés -->
                     <li class="nav-item" th:if="${isAuthenticated}">
                         <a class="nav-link nav-link-logout" th:href="@{/logout}">
