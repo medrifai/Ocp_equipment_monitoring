@@ -32,26 +32,24 @@ public class MaintenanceLogController {
 
     @GetMapping
     public String listMaintenanceLogs(Model model) {
-        addRoleAttributes(model); // Ajout des attributs d'authentification et de rôle au modèle
+        addRoleAttributes(model);
         model.addAttribute("maintenanceLogs", maintenanceLogService.getAllMaintenanceLogs());
         return "maintenance_log_list";
     }
 
     @GetMapping("/{id}")
     public String viewMaintenanceLog(@PathVariable Long id, Model model) {
-        addRoleAttributes(model); // Ajout des attributs d'authentification et de rôle au modèle
+        addRoleAttributes(model);
         MaintenanceLogDto maintenanceLog = maintenanceLogService.getMaintenanceLogById(id);
         if (maintenanceLog == null) {
             return "error/404";
         }
 
-        // Obtenez les détails de l'équipement à partir de l'ID de l'équipement
         EquipmentDto equipment = equipmentService.getEquipmentById(maintenanceLog.getEquipmentId());
         if (equipment == null) {
             return "error/404";
         }
 
-        // Ajoutez les détails de l'équipement au DTO de maintenance
         model.addAttribute("maintenanceLog", maintenanceLog);
         model.addAttribute("equipment", equipment);
 
@@ -60,30 +58,30 @@ public class MaintenanceLogController {
 
     @GetMapping("/create")
     public String createMaintenanceLogForm(Model model) {
-        addRoleAttributes(model); // Ajout des attributs d'authentification et de rôle au modèle
+        addRoleAttributes(model);
         MaintenanceLogDto maintenanceLogDto = new MaintenanceLogDto();
         List<EquipmentDto> equipmentList = equipmentService.getAllEquipments();
 
         model.addAttribute("maintenanceLog", maintenanceLogDto);
-        model.addAttribute("equipmentList", equipmentList); // Ajouter la liste des équipements au modèle
+        model.addAttribute("equipmentList", equipmentList);
         return "maintenance_log_form";
     }
 
     @PostMapping("/create")
     public String saveMaintenanceLog(@ModelAttribute @Valid MaintenanceLogDto maintenanceLogDto, BindingResult result, Model model) {
-        addRoleAttributes(model); // Ajout des attributs d'authentification et de rôle au modèle
+        addRoleAttributes(model);
         if (result.hasErrors()) {
             List<EquipmentDto> equipmentList = equipmentService.getAllEquipments();
-            model.addAttribute("equipmentList", equipmentList); // Réajouter la liste des équipements en cas d'erreur
+            model.addAttribute("equipmentList", equipmentList);
             return "maintenance_log_form";
         }
         maintenanceLogService.saveMaintenanceLog(maintenanceLogDto);
         return "redirect:/maintenance_logs";
     }
 
-    @GetMapping("/delete/{id}")
+    // Utilisation de @DeleteMapping au lieu de @GetMapping pour la suppression
+    @PostMapping("/delete/{id}")
     public String deleteMaintenanceLog(@PathVariable Long id, Model model) {
-        addRoleAttributes(model); // Ajout des attributs d'authentification et de rôle au modèle
         MaintenanceLogDto maintenanceLog = maintenanceLogService.getMaintenanceLogById(id);
         if (maintenanceLog == null) {
             return "error/404";
@@ -111,3 +109,4 @@ public class MaintenanceLogController {
         }
     }
 }
+

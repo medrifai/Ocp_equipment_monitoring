@@ -1,6 +1,6 @@
 /* Styles globaux */
 body {
-    background-color: #000;
+    background-color: #1c1c1c;
 }
 
 .ag-format-container {
@@ -21,6 +21,7 @@ body {
     margin: 0 15px 30px;
     overflow: hidden;
     border-radius: 28px;
+    position: relative; /* Ajouté pour le positionnement absolu des éléments enfants */
 }
 
 .ag-courses-item_link {
@@ -29,12 +30,20 @@ body {
     background-color: #121212;
     overflow: hidden;
     position: relative;
+    text-decoration: none;
+    height: 100%; /* S'assure que le lien couvre toute la carte */
+    color: #FFF; /* Assure que le texte est visible par défaut */
 }
 
-.ag-courses-item_link:hover,
-.ag-courses-item_link:hover .ag-courses-item_date {
+.ag-courses-item_link:hover {
     text-decoration: none;
     color: #FFF;
+}
+
+.ag-courses-item_link:hover .ag-courses-item_date,
+.ag-courses-item_link:hover .ag-courses-item_description,
+.ag-courses-item_link:hover .ag-courses-item_title {
+    color: #FFF; /* Couleur du texte lors du hover */
 }
 
 .ag-courses-item_link:hover .ag-courses-item_bg {
@@ -126,6 +135,14 @@ body {
     font-size: 16px; /* Taille du texte */
 }
 
+.ag-courses-item_description {
+    margin-top: -56px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    z-index: 2; /* Assure que la description est au-dessus des autres éléments */
+    position: relative; /* Assure que la description est visible au-dessus */
+}
+
 /* Ajustements pour les petits écrans */
 @media only screen and (max-width: 979px) {
     .ag-courses_item {
@@ -157,4 +174,12 @@ body {
     .ag-courses-item_date-box {
         font-size: 16px;
     }
+}
+/* Footer */
+.footer {
+    margin-top: auto; /* Pousse le footer vers le bas */
+    text-align: center;
+    color: #ffffff;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.7); /* Arrière-plan opaque pour la lisibilité */
 }

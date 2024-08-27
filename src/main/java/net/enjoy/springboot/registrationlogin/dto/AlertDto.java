@@ -18,8 +18,7 @@ public class AlertDto {
     private Long id;
 
     @NotNull(message = "L'équipement ne peut pas être nul")
-    private Long equipmentId; // Conservez ce champ si nécessaire pour les opérations internes
-
+    private Long equipmentId;
     @NotNull(message = "La date et l'heure ne peuvent pas être nulles")
     private LocalDateTime timestamp;
 

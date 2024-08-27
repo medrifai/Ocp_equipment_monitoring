@@ -11,5 +11,5 @@ public interface AlertService {
     void deleteAlert(Long id);
     List<AlertDto> getAllResolvedAlerts();
     List<AlertDto> getAllUnresolvedAlerts();
-    void resolveAlert(Long id); // Ajouté
+    void resolveAlert(Long id);
 }

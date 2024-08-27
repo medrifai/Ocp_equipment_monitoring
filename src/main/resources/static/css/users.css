@@ -1,4 +1,13 @@
-/* Fichier: table-styles.css */
+/* Style pour le conteneur de la table */
+.container {
+    margin-top: 1rem; /* Augmentez cette valeur pour créer plus d'espace */
+    padding-top: 5rem; /* Ajoutez du padding pour l'espace interne */
+}
+
+/* Style pour le navbar (ajustez si nécessaire) */
+.navbar {
+    margin-bottom: 2rem; /* Ajoutez de l'espace sous le navbar */
+}
 
 /* Style pour la table */
 .table {
